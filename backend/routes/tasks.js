@@ -1,11 +1,18 @@
 const Task = require("../models/task");
 const express = require("express");
+const { response } = require("express");
 const router = express.Router();
 
+
+/**
+ * Sample cURL:
+ * curl -H "Content-Type: application/json" -X POST -d {\"data\":\"bald\"} localhost:8080/api/tasks/create
+ */
 router.post("/create", async (req, res) => {
   console.log(req.body)
   try {
     const task = await new Task(req.body).save();
+    // Task.create(req.body);  // Saves to legit database (mongodb srv)
     res.send(task);
   } catch (error) {
     res.send(error);
@@ -32,25 +39,28 @@ router.get("/", async (req, res) => {
 /**
  * CREATE 'PUT' REQUEST
  * Finds the specified document and updates the value present in the body
- * Alternatively - deletes document and replaces it with new one
+ * 
+ * Example cURL:
+ * curl -H "Content-Type: application/json" -X PUT -d {\"data\":\"hamlet\"} localhost:8080/api/tasks/update/6328bf9fac65bd263ebd3bc9
  */
-router.post("/put", async (req, res) => {
-  try {
-    const task = await new Task(req.body).save();
-    res.send(task);
-  } catch (error) {
-    res.send(error);
-  }
+router.put("/update/:id", async (req, res) => {
+  let updatedTask = await Task.updateOne(
+    req.params,
+    {$set: req.body}
+  );
+  res.send(updatedTask);
 });
 
 /** 
  * CREATE 'DELETE' REQUEST 
- * Deletes the document with the ID (or matching content?) specified in URL
+ * 
+ * Example cURL:
+ * curl -X DELETE localhost:8080/api/tasks/delete/6328c20e2efc119791f52b55 -H "Accept: application/json"
 */
-router.get("/", async (req, res) => {
+router.delete("/delete/:id", async (req, res) => {
   try {
-    const tasks = await Task.find();
-    res.send(tasks);
+    let deletedTask = await Task.deleteOne(req.params);
+    res.send(deletedTask);
   } catch (error) {
     res.send(error);
   }

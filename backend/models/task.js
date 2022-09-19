@@ -5,12 +5,15 @@ const Schema = mongoose.Schema;
 /**
  * @param {String} body The body
  */
-const taskSchema = new mongoose.Schema(body,
+const taskSchema = new mongoose.Schema(
     {
-        methods: {
-            find() { return -1; }
-        }
+        data: { type: String, required: true },
     }
-    );
-
+);
+taskSchema.methods.exists = function exists() {
+    const greeting = this.data
+        ? "hello and " + this.data
+        : "no data";
+    console.log(greeting);
+};
 module.exports = mongoose.model("task", taskSchema);
