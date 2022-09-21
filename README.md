@@ -1,3 +1,17 @@
+App is not hosted
+
+## Instructions for use:
+1. in backend directory:
+```sh
+$ npm init -y; npm install nodemon -g; npm install cors mongoose express; npx nodemon server
+```
+2. in frontend directory:
+```sh
+$ npm start
+```
+
+
+# Resume Prompt
 Hey!
 
 Thanks for your interest in joining Hack4Impact BU! We require prospective Impact team members to complete this coding challenge for two reasons: 1) So they have a basic understanding of some possible obstacles they will face when working on one of our partner’s projects and 2) to see if the Impact Team is currently the right place for you.
