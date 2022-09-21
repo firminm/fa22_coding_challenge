@@ -6,12 +6,12 @@ const router = express.Router();
 
 /**
  * Sample cURL:
- * curl -H "Content-Type: application/json" -X POST -d {\"data\":\"bald\"} localhost:8080/api/tasks/create
+ * curl -H "Content-Type: application/json" -X POST -d {\"task\":\"bald\"} localhost:8080/api/tasks/create
  */
 router.post("/create", async (req, res) => {
-  console.log(req.body)
   try {
     const task = await new Task(req.body).save();
+    Task.create(req.body);
     // Task.create(req.body);  // Saves to legit database (mongodb srv)
     res.send(task);
   } catch (error) {
@@ -41,13 +41,16 @@ router.get("/", async (req, res) => {
  * Finds the specified document and updates the value present in the body
  * 
  * Example cURL:
- * curl -H "Content-Type: application/json" -X PUT -d {\"data\":\"hamlet\"} localhost:8080/api/tasks/update/6328bf9fac65bd263ebd3bc9
+ * curl -H "Content-Type: application/json" -X PUT -d {\"task\":\"hamlet\"} localhost:8080/api/tasks/update/6328bf9fac65bd263ebd3bc9
  */
 router.put("/update/:id", async (req, res) => {
+  console.log(req.body.task);
   let updatedTask = await Task.updateOne(
-    req.params,
-    {$set: req.body}
+    {_id: req.body.task._id},
+    {$set: {task: req.body.task.task}}
   );
+  // let updatedTask = await Task.findByIdAndUpdate(req.body._id, req.body.task,
+  // );
   res.send(updatedTask);
 });
 

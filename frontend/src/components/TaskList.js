@@ -25,7 +25,7 @@ const TaskList = () => {
       <h1 className='text-center'>Tasks</h1>
       <div>
         {tasks.length ? (
-          tasks.map((task) => <Task key={task._id} task={task} />)
+          tasks.map((task) => <Task key={task._id} task={task} />) // all of these guys have the same id?
         ) : (
           <p className='pt-5 text-center'>"No Tasks Created"</p>
         )}
