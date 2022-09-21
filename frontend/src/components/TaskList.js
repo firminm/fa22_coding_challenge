@@ -3,11 +3,7 @@ import Task from "./Task";
 import { getTasks } from "../services/taskServices";
 
 const TaskList = () => {
-  const [tasks, setTasks] = useState([
-    { task: "test1" },
-    { task: "test2" },
-    { task: "test3" },
-  ]);
+  const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
     try {
