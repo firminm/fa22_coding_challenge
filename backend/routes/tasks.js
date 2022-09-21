@@ -44,10 +44,10 @@ router.get("/", async (req, res) => {
  * curl -H "Content-Type: application/json" -X PUT -d {\"task\":\"hamlet\"} localhost:8080/api/tasks/update/6328bf9fac65bd263ebd3bc9
  */
 router.put("/update/:id", async (req, res) => {
-  console.log(req.body.task);
+  task = req.body.task;
   let updatedTask = await Task.updateOne(
-    {_id: req.body.task._id},
-    {$set: {task: req.body.task.task}}
+    {_id: task._id},
+    {$set: {task: task.task}}
   );
   // let updatedTask = await Task.findByIdAndUpdate(req.body._id, req.body.task,
   // );
